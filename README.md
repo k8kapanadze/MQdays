@@ -3,105 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NurseFlow Glass Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>NurseFlow OS - Glass Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
             --accent: #2563eb;
-            --text: #0f172a;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+            --text: #1e293b;
+            --shadow: 0 10px 40px rgba(31, 38, 135, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
         body { 
-            background: linear-gradient(135deg, #eef2ff 0%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
             background-attachment: fixed;
-            color: var(--text);
-            padding: 15px;
             min-height: 100vh;
+            padding: 15px;
+            color: var(--text);
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; }
 
+        /* Glass Cards with 3D shadow */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
+            border-radius: 24px;
             box-shadow: var(--shadow);
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 20px;
         }
 
-        /* Nurse Header */
-        .nurse-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .nurse-header h1 { font-size: 1.5rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
+        .header { text-align: center; margin-bottom: 10px; }
+        .header h1 { font-size: 1.4rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
 
         .control-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
-        .field { display: flex; flex-direction: column; gap: 6px; }
-        label { font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; padding-left: 5px; }
+        .field { display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 0.65rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-left: 5px; }
 
         input, select {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.5);
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             outline: none;
             transition: 0.3s;
         }
-        input:focus { background: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
 
-        .btn-row { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 20px; }
+        input:focus, select:focus { background: #fff; border-color: var(--accent); }
 
         .btn {
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             padding: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.05);
         }
         .btn:active { transform: translateY(2px); box-shadow: none; }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-secondary { background: white; color: var(--text); border: 1px solid var(--glass-border); }
-        .btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 10px; box-shadow: none; }
+        
+        .btn-primary { background: var(--accent); color: white; width: 100%; }
+        .btn-secondary { background: #fff; color: var(--text); border: 1px solid var(--glass-border); }
+        .btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); width: 100%; margin-top: 10px; }
 
-        /* Table */
-        .table-wrap { border-radius: 28px; overflow: hidden; box-shadow: var(--shadow); background: var(--glass); }
+        /* Table Design */
+        .table-wrap { border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); background: var(--glass); }
         table { width: 100%; border-collapse: collapse; }
-        th { background: rgba(255,255,255,0.5); padding: 18px; font-size: 0.75rem; color: #64748b; border-bottom: 1px solid var(--glass-border); }
-        td { padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        th { background: rgba(255,255,255,0.4); padding: 15px; font-size: 0.7rem; color: #64748b; border-bottom: 1px solid var(--glass-border); }
+        td { padding: 10px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); }
 
-        .day-box { font-weight: 800; font-size: 1rem; color: #334155; }
+        .day-num { font-weight: 800; color: #475569; width: 60px; }
         
         .plan-select {
-            width: 75px; padding: 8px; border-radius: 10px; border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.4); font-weight: 700; text-align: center; cursor: pointer;
+            width: 70px; padding: 6px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.5); font-weight: 700; text-align: center;
         }
 
-        .real-box {
-            background: rgba(37, 99, 235, 0.07);
+        .real-val {
+            background: rgba(37, 99, 235, 0.08);
             color: var(--accent);
             font-weight: 800;
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 8px;
             cursor: pointer;
-            min-width: 50px;
             display: inline-block;
+            min-width: 45px;
         }
 
         .totals {
@@ -109,13 +107,13 @@
             background: rgba(255,255,255,0.3); border-top: 1px solid var(--glass-border);
         }
         .total-item { text-align: center; }
-        .t-label { font-size: 0.65rem; font-weight: 700; color: #64748b; display: block; }
-        .t-val { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+        .t-label { font-size: 0.6rem; font-weight: 700; color: #64748b; }
+        .t-num { display: block; font-size: 1.2rem; font-weight: 800; color: var(--accent); }
 
         /* Modal */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(10px); z-index: 1000; padding: 20px; }
-        .modal-content { background: white; max-width: 450px; margin: 60px auto; padding: 35px; border-radius: 32px; box-shadow: var(--shadow); }
-        textarea { width: 100%; border-radius: 18px; padding: 15px; background: #f1f5f9; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(8px); z-index: 1000; }
+        .modal-content { background: white; max-width: 400px; margin: 80px auto; padding: 30px; border-radius: 24px; box-shadow: var(--shadow); }
+        textarea { width: 100%; border-radius: 14px; padding: 12px; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; }
 
         @media print { .no-print { display: none !important; } }
     </style>
@@ -123,16 +121,16 @@
 <body>
 
 <div class="container">
-    <div class="nurse-header">
-        <h1 id="displayNurseName">ექთნის გრაფიკი</h1>
+    <div class="header">
+        <h1 id="nurseHeading">ექთნის გრაფიკი</h1>
     </div>
 
     <div class="glass-card no-print">
-        <div class="field" style="margin-bottom: 20px;">
+        <div class="field" style="margin-bottom: 15px;">
             <label>ექთნის სახელი</label>
-            <input type="text" id="nurseName" placeholder="ჩაწერეთ სახელი..." oninput="updateNameHeader()">
+            <input type="text" id="nurseName" placeholder="შეიყვანეთ სახელი..." oninput="updateHeading()">
         </div>
-        
+
         <div class="control-grid">
             <div class="field">
                 <label>თვე</label>
@@ -142,33 +140,38 @@
                 <label>წელი</label>
                 <select id="ySelect" onchange="render()"></select>
             </div>
+        </div>
+
+        <div class="control-grid">
             <div class="field">
-                <label>დღე</label>
-                <input type="number" id="realDay" placeholder="რიცხვი" min="1" max="31">
+                <label>დღე (რეალური)</label>
+                <input type="number" id="realDay" placeholder="1-31">
             </div>
             <div class="field">
-                <label>საათი (რეალური)</label>
+                <label>საათი</label>
                 <select id="realHours">
-                    <option value="24">24 სთ</option>
-                    <option value="16">16 სთ</option>
-                    <option value="8">8 სთ</option>
-                    <option value="0">გაცდენა</option>
+                    <option value="24">24</option>
+                    <option value="16">16</option>
+                    <option value="8">8</option>
+                    <option value="0">0</option>
                 </select>
             </div>
         </div>
 
-        <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveRealTime()">დაფიქსირება</button>
-            <button class="btn btn-secondary" onclick="fillYear()">წლის შევსება</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button class="btn btn-primary" onclick="saveReal()">დაფიქსირება</button>
+            <button class="btn btn-secondary" onclick="fillFuture()">წლის შევსება</button>
         </div>
-        <button class="btn btn-danger" style="width: 100%;" onclick="clearMonth()">ამ თვის გეგმის წაშლა</button>
+        
+        <button class="btn btn-danger" onclick="clearFromNow()">გეგმის წაშლა ამ თვიდან წლის ბოლომდე</button>
+        <button class="btn btn-secondary" style="width:100%; margin-top:10px;" onclick="window.print()">ბეჭდვა</button>
     </div>
 
     <div class="table-wrap">
-        <table id="mainTable">
+        <table>
             <thead>
                 <tr>
-                    <th>დღე</th>
+                    <th class="day-num">#</th>
                     <th>გეგმა</th>
                     <th>რეალური</th>
                 </tr>
@@ -177,12 +180,12 @@
         </table>
         <div class="totals">
             <div class="total-item">
-                <span class="t-label">გეგმიური ჯამი</span>
-                <span id="totalPlan" class="t-val">0</span>
+                <span class="t-label">გეგმიური</span>
+                <span id="totalPlan" class="t-num">0</span>
             </div>
             <div class="total-item">
-                <span class="t-label">ნამუშევარი სულ</span>
-                <span id="totalReal" class="t-val" style="color: #10b981;">0</span>
+                <span class="t-label">ნამუშევარი</span>
+                <span id="totalReal" class="t-num" style="color: #10b981;">0</span>
             </div>
         </div>
     </div>
@@ -190,18 +193,18 @@
 
 <div id="jModal" class="modal">
     <div class="modal-content">
-        <h2 id="jTitle"></h2>
-        <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px;">რა ისწავლეთ? / როგორ გაერთეთ?</p>
-        <textarea id="jText" rows="6"></textarea>
-        <div style="display:flex; gap:12px;">
-            <button class="btn btn-secondary" style="flex:1" onclick="closeM()">გაუქმება</button>
+        <h3 id="jTitle"></h3>
+        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px;">რა ისწავლეთ? / როგორ გაერთეთ?</p>
+        <textarea id="jText" rows="5"></textarea>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary" style="flex:1" onclick="closeM()">დახურვა</button>
             <button class="btn btn-primary" style="flex:1" onclick="saveJ()">შენახვა</button>
         </div>
     </div>
 </div>
 
 <script>
-    let state = JSON.parse(localStorage.getItem('nurse_glass_v9')) || { nurse: "", shifts: {} };
+    let state = JSON.parse(localStorage.getItem('nurse_os_v10')) || { name: "", shifts: {} };
     const months = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
     let activeKey = null;
 
@@ -209,19 +212,20 @@
         const ms = document.getElementById('mSelect');
         const ys = document.getElementById('ySelect');
         months.forEach((m, i) => ms.add(new Option(m, i)));
-        for(let y=2024; y<=2026; y++) ys.add(new Option(y, y));
+        // წლები 2026-დან 2030-მდე
+        for(let y=2026; y<=2030; y++) ys.add(new Option(y, y));
         
         ms.value = new Date().getMonth();
         ys.value = new Date().getFullYear();
-        document.getElementById('nurseName').value = state.nurse || "";
-        updateNameHeader();
+        document.getElementById('nurseName').value = state.name || "";
+        updateHeading();
         render();
     }
 
-    function updateNameHeader() {
-        const name = document.getElementById('nurseName').value;
-        document.getElementById('displayNurseName').innerText = name ? name + "-ის გრაფიკი" : "ექთნის გრაფიკი";
-        state.nurse = name;
+    function updateHeading() {
+        const n = document.getElementById('nurseName').value;
+        state.name = n;
+        document.getElementById('nurseHeading').innerText = n ? `${n}-ის გრაფიკი` : "ექთნის გრაფიკი";
         save();
     }
 
@@ -237,14 +241,14 @@
             const k = `d_${y}_${m}_${d}`;
             const pVal = state.shifts[k]?.plan || "";
             const rVal = state.shifts[k]?.real || "-";
-            const hasNote = state.shifts[k]?.note ? `<span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block; margin-left:6px;"></span>` : "";
-            
+            const noteDot = state.shifts[k]?.note ? `<span style="width:5px;height:5px;background:#10b981;border-radius:50%;display:inline-block;margin-left:4px;"></span>` : "";
+
             tPlan += parseInt(pVal) || 0;
             tReal += parseInt(rVal) || 0;
 
             bHTML += `
                 <tr>
-                    <td class="day-box">${d}</td>
+                    <td class="day-num">${d}</td>
                     <td>
                         <select class="plan-select" onchange="upd('${k}','plan',this.value)">
                             <option value=""></option>
@@ -253,7 +257,7 @@
                             <option value="24" ${pVal=='24'?'selected':''}>24</option>
                         </select>
                     </td>
-                    <td><div class="real-box" onclick="openM('${k}', ${d})">${rVal} ${hasNote}</div></td>
+                    <td><div class="real-val" onclick="openM('${k}', ${d})">${rVal} ${noteDot}</div></td>
                 </tr>`;
         }
         document.getElementById('bTable').innerHTML = bHTML;
@@ -261,57 +265,70 @@
         document.getElementById('totalReal').innerText = tReal;
     }
 
-    function saveRealTime() {
+    function saveReal() {
         const d = document.getElementById('realDay').value;
         const h = document.getElementById('realHours').value;
         const m = document.getElementById('mSelect').value;
         const y = document.getElementById('ySelect').value;
-        if(!d || d < 1 || d > 31) return alert("მიუთითეთ სწორი რიცხვი");
+        if(!d || d < 1 || d > 31) return alert("მიუთითეთ რიცხვი");
         const k = `d_${y}_${m}_${d}`;
         if(!state.shifts[k]) state.shifts[k] = {};
         state.shifts[k].real = h;
         save(); render();
     }
 
-    function clearMonth() {
-        const m = parseInt(document.getElementById('mSelect').value);
-        const y = parseInt(document.getElementById('ySelect').value);
-        if(confirm(`${months[m]} თვის გეგმიური საათები წაიშლება. დარწმუნებული ხართ?`)) {
-            for(let d=1; d<=31; d++) {
-                const k = `d_${y}_${m}_${d}`;
-                if(state.shifts[k]) state.shifts[k].plan = "";
+    // თვიდან წლის ბოლომდე წაშლის ფუნქცია
+    function clearFromNow() {
+        const currentM = parseInt(document.getElementById('mSelect').value);
+        const currentY = document.getElementById('ySelect').value;
+
+        if(confirm(`${months[currentM]} თვიდან წლის ბოლომდე ყველა გეგმა წაიშლება. დარწმუნებული ხართ?`)) {
+            // მივდივართ მიმდინარე თვიდან დეკემბრამდე
+            for(let m = currentM; m <= 11; m++) {
+                for(let d = 1; d <= 31; d++) {
+                    const k = `d_${currentY}_${m}_${d}`;
+                    if(state.shifts[k]) {
+                        state.shifts[k].plan = "";
+                    }
+                }
             }
             save(); render();
         }
     }
 
-    function fillYear() {
+    function fillFuture() {
         const m = parseInt(document.getElementById('mSelect').value);
         const y = parseInt(document.getElementById('ySelect').value);
         let startD = null, hrs = 24;
-        for(let d=1; d<=31; d++) { 
-            if(state.shifts[`d_${y}_${m}_${d}`]?.plan) { 
-                startD = new Date(y, m, d); 
-                hrs = state.shifts[`d_${y}_${m}_${d}`].plan; break; 
-            } 
+        
+        for(let d=1; d<=31; d++) {
+            if(state.shifts[`d_${y}_${m}_${d}`]?.plan) {
+                startD = new Date(y, m, d);
+                hrs = state.shifts[`d_${y}_${m}_${d}`].plan;
+                break;
+            }
         }
+
         if(startD) {
             let c = new Date(startD);
-            while(c.getFullYear() <= 2026) {
+            while(c.getFullYear() <= 2030) {
                 const k = `d_${c.getFullYear()}_${c.getMonth()}_${c.getDate()}`;
                 if(!state.shifts[k]) state.shifts[k] = {};
                 state.shifts[k].plan = hrs;
                 c.setDate(c.getDate() + 4);
             }
-            save(); render();
-        } else { alert("ჯერ მონიშნეთ ერთ-ერთი დღის გეგმა ცხრილში!"); }
+            save(); render(); alert("გრაფიკი შეივსო 2030 წლამდე!");
+        } else {
+            alert("ჯერ მონიშნეთ ერთ-ერთი დღის გეგმა (8, 16, 24) ცხრილში!");
+        }
     }
 
     function upd(k, f, v) { if(!state.shifts[k]) state.shifts[k] = {}; state.shifts[k][f] = v; save(); render(); }
-    function openM(k, d) { activeKey = k; document.getElementById('jTitle').innerText = `${d} რიცხვის დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
+    function openM(k, d) { activeKey = k; document.getElementById('jTitle').innerText = `${d} რიცხვის ჟურნალი`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
     function saveJ() { if(!state.shifts[activeKey]) state.shifts[activeKey] = {}; state.shifts[activeKey].note = document.getElementById('jText').value; save(); render(); closeM(); }
     function closeM() { document.getElementById('jModal').style.display='none'; }
-    function save() { localStorage.setItem('nurse_glass_v9', JSON.stringify(state)); }
+    function save() { localStorage.setItem('nurse_os_v10', JSON.stringify(state)); }
+
     init();
 </script>
 </body>
