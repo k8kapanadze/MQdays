@@ -3,169 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NurseFlow Single - Mobile Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>NurseFlow Glass-OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
             --accent: #2563eb;
-            --bg: #f1f5f9;
-            --row-real: #eff6ff;
-            --border: #e2e8f0;
+            --text: #0f172a;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--primary); padding: 10px; }
-
-        .app-wrapper { 
-            display: grid; 
-            grid-template-columns: 1fr 350px; 
-            gap: 15px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-
-        /* Mobile Responsive adjustment */
-        @media (max-width: 850px) {
-            .app-wrapper { grid-template-columns: 1fr; }
-            .side-panel { order: -1; } /* მართვის პანელი ავა ზემოთ */
-        }
-
-        /* Table Style */
-        .table-container { 
-            background: #fff; border-radius: 16px; border: 1px solid var(--border); 
-            overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border-bottom: 1px solid var(--border); text-align: center; padding: 12px 8px; }
-        th { background: #f8fafc; font-size: 0.8rem; color: #64748b; text-transform: uppercase; }
-
-        .day-col { font-weight: 700; width: 50px; border-right: 1px solid var(--border); background: #fdfefe; }
-        .row-plan { height: 55px; }
-        .row-real { background: var(--row-real); color: var(--accent); font-weight: 700; cursor: pointer; height: 55px; }
-
-        /* Select Styling in Table */
-        .shift-select {
-            width: 80%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px;
-            background: #fff; font-weight: 600; color: #475569; outline: none;
-        }
-
-        /* Side Panel Style */
-        .side-panel { display: flex; flex-direction: column; gap: 15px; position: sticky; top: 10px; height: fit-content; }
-        .card { background: #fff; padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         
-        h3 { font-size: 0.75rem; color: #64748b; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-
-        .input-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.8rem; margin-bottom: 5px; font-weight: 600; }
-        
-        input, select { 
-            width: 100%; padding: 12px; border: 1px solid var(--border); 
-            border-radius: 10px; outline: none; font-size: 1rem;
+        body { 
+            background: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            padding: 15px;
+            min-height: 100vh;
         }
 
-        .btn { 
-            width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: 700; 
-            cursor: pointer; transition: 0.2s; font-size: 0.9rem; margin-top: 5px;
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
+
+        .glass-card:hover { transform: translateY(-2px); }
+
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+
+        /* Inputs Grid */
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-left: 5px; }
+
+        input, select {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus { background: #fff; border-color: var(--accent); }
+
+        /* Buttons - 3D Effect */
+        .btn {
+            border-radius: 12px;
+            border: none;
+            padding: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .btn:active { transform: translateY(2px); box-shadow: none; }
+
         .btn-primary { background: var(--accent); color: white; }
-        .btn-secondary { background: #f8fafc; color: var(--primary); border: 1px solid var(--border); }
-        .btn-danger { color: #ef4444; background: #fff; border: 1px solid #fee2e2; }
+        .btn-secondary { background: #fff; color: var(--text); border: 1px solid var(--glass-border); }
 
-        .total-box { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid #eee; }
-        .total-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+        /* Table Design */
+        .table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; background: var(--glass); backdrop-filter: blur(10px); }
+        
+        th { background: rgba(255, 255, 255, 0.4); padding: 15px; font-size: 0.75rem; font-weight: 700; color: #64748b; border-bottom: 1px solid var(--glass-border); }
+        td { padding: 10px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); }
 
-        .badge-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block; }
+        .day-num { font-weight: 800; color: #1e293b; width: 50px; }
+        
+        /* Plan select in table */
+        .plan-cell select {
+            width: 70px;
+            padding: 5px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.5);
+            font-weight: 700;
+            text-align: center;
+        }
 
-        /* Modal */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 1000; }
-        .modal-content { background: white; width: 90%; max-width: 400px; margin: 100px auto; padding: 25px; border-radius: 20px; }
-        textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-top: 10px; font-size: 1rem; }
+        /* Real Cell - 3D Glass Look */
+        .real-cell {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent);
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .real-cell:hover { background: rgba(37, 99, 235, 0.15); }
+
+        /* Footer Totals */
+        .totals-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.4);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .total-item { display: flex; flex-direction: column; align-items: center; }
+        .total-label { font-size: 0.7rem; color: #64748b; font-weight: 600; }
+        .total-num { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+
+        /* Modal Journal */
+        .modal { 
+            display: none; position: fixed; inset: 0; 
+            background: rgba(15, 23, 42, 0.4); 
+            backdrop-filter: blur(8px); 
+            z-index: 1000; 
+            padding: 20px;
+        }
+        .modal-content { 
+            background: white; 
+            max-width: 450px; 
+            margin: 50px auto; 
+            padding: 30px; 
+            border-radius: 28px; 
+            box-shadow: var(--shadow);
+        }
+        textarea { 
+            width: 100%; border: 1px solid var(--glass-border); 
+            border-radius: 16px; padding: 15px; font-size: 1rem; 
+            margin: 15px 0; outline: none; background: #f8fafc;
+        }
+
+        .no-print { display: block; }
+        @media print { .no-print { display: none !important; } .glass-card { box-shadow: none; border: 1px solid #000; } }
     </style>
 </head>
 <body>
 
-<div class="app-wrapper">
-    <div class="table-container">
+<div class="container">
+    <div class="header no-print">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9 12h6M12 9v6"/></svg>
+            NURSEFLOW PRO
+        </div>
+        <button class="btn btn-secondary" onclick="window.print()">ბეჭდვა</button>
+    </div>
+
+    <div class="glass-card no-print">
+        <div class="control-grid">
+            <div class="input-field">
+                <label>თვე</label>
+                <select id="mSelect" onchange="render()"></select>
+            </div>
+            <div class="input-field">
+                <label>წელი</label>
+                <select id="ySelect" onchange="render()"></select>
+            </div>
+            <div class="input-field">
+                <label>დღე</label>
+                <input type="number" id="realDay" placeholder="რიცხვი" min="1" max="31">
+            </div>
+            <div class="input-field">
+                <label>საათი (რეალ)</label>
+                <select id="realHours">
+                    <option value="24">24 სთ</option>
+                    <option value="16">16 სთ</option>
+                    <option value="8">8 სთ</option>
+                    <option value="0">0 (გაცდენა)</option>
+                </select>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 15px;">
+            <button class="btn btn-primary" onclick="saveRealTime()">მონაცემის დაფიქსირება</button>
+            <button class="btn btn-secondary" onclick="fillYear()">წლის შევსება</button>
+        </div>
+        <button class="btn btn-secondary" style="width: 100%; margin-top: 10px; color: #ef4444;" onclick="clearMonth()">თვის გეგმის გასუფთავება</button>
+    </div>
+
+    <div class="table-wrap">
         <table id="mainTable">
             <thead>
                 <tr>
-                    <th class="day-col">რიცხვი</th>
-                    <th>გეგმიური</th>
+                    <th class="day-num">#</th>
+                    <th>გეგმა</th>
                     <th>რეალური</th>
                 </tr>
             </thead>
             <tbody id="bTable"></tbody>
+            <tfoot>
+                <tr class="totals-bar">
+                    <td colspan="3" style="padding: 0;">
+                        <div class="totals-bar">
+                            <div class="total-item">
+                                <span class="total-label">გეგმიური ჯამი</span>
+                                <span id="totalPlan" class="total-num">0</span>
+                            </div>
+                            <div class="total-item">
+                                <span class="total-label">რეალური ნამუშევარი</span>
+                                <span id="totalReal" class="total-num" style="color: #10b981;">0</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
-    </div>
-
-    <div class="side-panel no-print">
-        <div class="card" style="display: flex; align-items: center; gap: 10px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9 12h6M12 9v6"/></svg>
-            <h1 style="font-size: 1.1rem;">NURSEFLOW</h1>
-        </div>
-
-        <div class="card">
-            <h3>📅 პერიოდი</h3>
-            <div style="display: flex; gap: 8px;">
-                <select id="mSelect" onchange="render()"></select>
-                <select id="ySelect" onchange="render()"></select>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>⏱️ რეალური აღრიცხვა</h3>
-            <div class="input-group">
-                <label>რიცხვი</label>
-                <input type="number" id="realDay" placeholder="მაგ: 15" min="1" max="31">
-            </div>
-            <div class="input-group">
-                <label>საათები</label>
-                <select id="realHours">
-                    <option value="8">8 საათი</option>
-                    <option value="16">16 საათი</option>
-                    <option value="24">24 საათი</option>
-                    <option value="0">0 (გაცდენა)</option>
-                </select>
-            </div>
-            <button class="btn btn-primary" onclick="saveRealTime()">დაფიქსირება</button>
-        </div>
-
-        <div class="card">
-            <h3>📊 თვიური ჯამი</h3>
-            <div class="total-box">
-                <span style="font-size: 0.9rem; color: #64748b;">ნამუშევარი საათები:</span>
-                <span id="totalReal" class="total-val">0</span>
-            </div>
-            <div class="total-box" style="border:none; padding-top: 5px;">
-                <span style="font-size: 0.8rem; color: #94a3b8;">გეგმიური ჯამი:</span>
-                <span id="totalPlan" style="font-weight: 600; color: #94a3b8;">0</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>⚙️ მართვა</h3>
-            <button class="btn btn-secondary" onclick="fillYear()">წლის გეგმის შევსება</button>
-            <button class="btn btn-danger" onclick="clearMonth()">თვის გასუფთავება</button>
-            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="window.print()">ბეჭდვა</button>
-        </div>
     </div>
 </div>
 
 <div id="jModal" class="modal">
     <div class="modal-content">
-        <h2 id="jTitle" style="font-size: 1.1rem; margin-bottom: 10px;"></h2>
-        <p style="font-size: 0.85rem; color: #64748b;">რა ისწავლეთ დღეს? / როგორ გაერთეთ?</p>
-        <textarea id="jText" rows="6" placeholder="ჩაწერეთ..."></textarea>
-        <div style="display:flex; gap:10px; margin-top:1.5rem;">
-            <button class="btn btn-secondary" onclick="closeM()">გაუქმება</button>
-            <button class="btn btn-primary" onclick="saveJ()">შენახვა</button>
+        <h2 id="jTitle" style="font-size: 1.2rem; font-weight: 700;"></h2>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px; line-height: 1.5;">
+            ჩაწერეთ კლინიკური შემთხვევა ან გამოცდილება. <br>
+            <strong>რა ისწავლეთ? / როგორ გაერთეთ?</strong>
+        </p>
+        <textarea id="jText" rows="6" placeholder="აღწერეთ სამუშაო დღე..."></textarea>
+        <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary" style="flex:1" onclick="closeM()">გაუქმება</button>
+            <button class="btn btn-primary" style="flex:1" onclick="saveJ()">შენახვა</button>
         </div>
     </div>
 </div>
 
 <script>
-    let state = JSON.parse(localStorage.getItem('nurse_single_v7')) || { shifts: {} };
+    let state = JSON.parse(localStorage.getItem('nurse_glass_v8')) || { shifts: {} };
     const months = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
     let activeKey = null;
 
@@ -189,26 +272,26 @@
         let tPlan = 0, tReal = 0;
 
         for(let d=1; d<=days; d++) {
-            const k = `nurse1_${y}_${m}_${d}`;
+            const k = `user_${y}_${m}_${d}`;
             const pVal = state.shifts[k]?.plan || "";
             const rVal = state.shifts[k]?.real || "-";
-            const hasNote = state.shifts[k]?.note ? `<span class="badge-dot"></span>` : "";
+            const hasNote = state.shifts[k]?.note ? `<span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block; margin-left:5px;"></span>` : "";
             
             tPlan += parseInt(pVal) || 0;
             tReal += parseInt(rVal) || 0;
 
             bHTML += `
-                <tr class="row-plan">
-                    <td class="day-col">${d}</td>
-                    <td>
-                        <select class="shift-select" onchange="upd('${k}','plan',this.value)">
+                <tr>
+                    <td class="day-num">${d}</td>
+                    <td class="plan-cell">
+                        <select onchange="upd('${k}','plan',this.value)">
                             <option value=""></option>
                             <option value="8" ${pVal=='8'?'selected':''}>8</option>
                             <option value="16" ${pVal=='16'?'selected':''}>16</option>
                             <option value="24" ${pVal=='24'?'selected':''}>24</option>
                         </select>
                     </td>
-                    <td class="row-real" onclick="openM('${k}', ${d})">${rVal} ${hasNote}</td>
+                    <td class="real-cell" onclick="openM('${k}', ${d})">${rVal} ${hasNote}</td>
                 </tr>`;
         }
         document.getElementById('bTable').innerHTML = bHTML;
@@ -222,7 +305,7 @@
         const m = document.getElementById('mSelect').value;
         const y = document.getElementById('ySelect').value;
         if(!d) return alert("მიუთითეთ რიცხვი");
-        const k = `nurse1_${y}_${m}_${d}`;
+        const k = `user_${y}_${m}_${d}`;
         if(!state.shifts[k]) state.shifts[k] = {};
         state.shifts[k].real = h;
         save(); render();
@@ -244,20 +327,20 @@
         const y = parseInt(document.getElementById('ySelect').value);
         let startD = null, hrs = 24;
         for(let d=1; d<=31; d++) { 
-            if(state.shifts[`nurse1_${y}_${m}_${d}`]?.plan) { 
+            if(state.shifts[`user_${y}_${m}_${d}`]?.plan) { 
                 startD = new Date(y, m, d); 
-                hrs = state.shifts[`nurse1_${y}_${m}_${d}`].plan; break; 
+                hrs = state.shifts[`user_${y}_${m}_${d}`].plan; break; 
             } 
         }
         if(startD) {
             let c = new Date(startD);
             while(c.getFullYear() <= 2026) {
-                const k = `nurse1_${c.getFullYear()}_${c.getMonth()}_${c.getDate()}`;
+                const k = `user_${c.getFullYear()}_${c.getMonth()}_${c.getDate()}`;
                 if(!state.shifts[k]) state.shifts[k] = {};
                 state.shifts[k].plan = hrs;
                 c.setDate(c.getDate() + 4);
             }
-            save(); render(); alert("გრაფიკი შეივსო წლის ბოლომდე");
+            save(); render();
         } else {
             alert("ჯერ მონიშნეთ პირველი დღე ცხრილში!");
         }
@@ -267,7 +350,7 @@
     function openM(k, d) { activeKey = k; document.getElementById('jTitle').innerText = `${d} რიცხვის დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
     function saveJ() { if(!state.shifts[activeKey]) state.shifts[activeKey] = {}; state.shifts[activeKey].note = document.getElementById('jText').value; save(); render(); closeM(); }
     function closeM() { document.getElementById('jModal').style.display='none'; }
-    function save() { localStorage.setItem('nurse_single_v7', JSON.stringify(state)); }
+    function save() { localStorage.setItem('nurse_glass_v8', JSON.stringify(state)); }
     init();
 </script>
 </body>
