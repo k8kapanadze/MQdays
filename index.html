@@ -13,6 +13,7 @@
             --success: #10b981;
             --danger: #ef4444;
             --bg: #f1f5f9;
+            --dark-navy: #0f172a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -20,7 +21,6 @@
         body { background: var(--bg); min-height: 100vh; padding: 10px; color: #1e293b; overflow-x: hidden; }
         .container { width: 100%; max-width: 600px; margin: 0 auto; transition: transform 0.3s ease; }
 
-        /* Glass Cards */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -33,18 +33,17 @@
 
         .section-title { font-size: 0.65rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; display: block; }
         
-        /* Inputs & Buttons */
         input, select { width: 100%; padding: 12px; border-radius: 14px; border: 1px solid #e2e8f0; outline: none; font-size: 1rem; margin-bottom: 10px; }
         .btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-primary { background: #0f172a; color: white; }
+        .btn-primary { background: var(--dark-navy); color: white; }
         .btn-secondary { background: white; border: 1px solid #e2e8f0; color: #1e293b; }
         .btn-archive { background: #eff6ff; color: var(--accent); border: 1px solid #dbeafe; }
 
         /* Table */
         .table-card { padding: 0; overflow: hidden; }
         table { width: 100%; border-collapse: collapse; }
-        th { background: #0f172a; color: white; padding: 12px 5px; font-size: 0.65rem; text-transform: uppercase; }
-        td { padding: 10px 2px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        th { background: var(--dark-navy); color: white; padding: 12px 5px; font-size: 0.65rem; text-transform: uppercase; }
+        td { padding: 12px 2px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.03); vertical-align: middle; }
         
         .day-num { font-weight: 800; color: #475569; font-size: 0.95rem; }
         .day-num.is-auto { color: var(--danger); }
@@ -52,34 +51,46 @@
         .plan-select { width: 90%; padding: 6px; font-weight: 800; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
         .real-val { background: #f0f7ff; color: var(--accent); font-weight: 800; border-radius: 8px; padding: 6px 0; width: 90%; display: inline-block; font-size: 0.9rem; }
 
-        /* Journal Icon Button */
-        .journal-icon-btn {
-            font-size: 1.2rem;
+        /* Carpe Diem Styled Badge */
+        .carpe-diem-btn {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 8px;
             cursor: pointer;
-            padding: 5px;
-            transition: 0.2s;
+            transition: 0.3s all;
             display: inline-block;
-            filter: grayscale(1);
-            opacity: 0.3;
+            white-space: nowrap;
         }
-        .journal-icon-btn.has-note { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+        .carpe-diem-btn.has-note {
+            background: var(--dark-navy);
+            color: #ffffff;
+            border-color: var(--dark-navy);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .carpe-diem-btn:active { transform: scale(0.95); }
 
-        /* Archive Page View */
+        /* Archive Page */
         #archivePage {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: white; z-index: 2000; overflow-y: auto; padding: 25px;
         }
         .archive-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .archive-item { margin-bottom: 25px; padding: 15px; border-radius: 15px; background: #f8fafc; border-left: 4px solid var(--accent); }
-        .archive-date { font-weight: 800; color: #0f172a; display: block; margin-bottom: 5px; }
-        .archive-note { color: #475569; font-size: 0.95rem; line-height: 1.6; }
+        .archive-item { margin-bottom: 25px; padding: 20px; border-radius: 18px; background: #f8fafc; border-left: 5px solid var(--dark-navy); }
+        .archive-date { font-weight: 800; color: var(--dark-navy); display: block; margin-bottom: 8px; font-size: 1.1rem; }
+        .archive-note { color: #334155; font-size: 1rem; line-height: 1.6; }
 
         /* Modal */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 3000; padding: 20px; }
-        .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
-        textarea { width: 100%; border-radius: 12px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; resize: none; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 3000; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        textarea { width: 100%; border-radius: 16px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; resize: none; outline: none; }
+        textarea:focus { border-color: var(--accent); }
 
-        /* Totals */
         .totals { display: flex; justify-content: space-around; padding: 15px; background: #f8fafc; border-top: 1px solid #e2e8f0; }
         .total-box { text-align: center; }
         .total-box span { font-size: 1.2rem; font-weight: 900; display: block; }
@@ -136,19 +147,19 @@
 
 <div id="archivePage">
     <div class="archive-header">
-        <button class="btn btn-secondary" style="width: auto; margin-bottom:0;" onclick="closeArchive()"> უკან</button>
+        <button class="btn btn-secondary" style="width: auto; margin-bottom:0;" onclick="closeArchive()">⬅ უკან</button>
         <h3 id="archiveTitle">დღიურის არქივი</h3>
         <button class="btn btn-primary" style="width: auto; margin-bottom:0;" onclick="downloadPDF()">📄 PDF</button>
     </div>
-    <div id="pdfContent">
-        <h2 id="pdfUser" style="margin-bottom: 20px; color: #0f172a;"></h2>
+    <div id="pdfContent" style="padding: 10px;">
+        <h2 id="pdfUser" style="margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #0f172a; padding-bottom: 10px;"></h2>
         <div id="archiveList"></div>
     </div>
 </div>
 
 <div id="jModal" class="modal">
     <div class="modal-content">
-        <h3 id="jTitle" style="font-weight: 800;"></h3>
+        <h3 id="jTitle" style="font-weight: 800; color: var(--dark-navy);"></h3>
         <textarea id="jText" rows="6" placeholder="აღწერეთ დღე (გამოცდილება / გართობა)..."></textarea>
         <div style="display: flex; gap: 10px;">
             <button class="btn btn-secondary" style="flex:1" onclick="closeM()">გაუქმება</button>
@@ -190,7 +201,7 @@
                     <option value="16" ${pVal=='16'?'selected':''}>16</option><option value="24" ${pVal=='24'?'selected':''}>24</option>
                 </select></td>
                 <td><div class="real-val">${rVal}</div></td>
-                <td><span class="journal-icon-btn ${s.note?'has-note':''}" onclick="openM('${k}',${d})">Carpe diem </span></td>
+                <td><div class="carpe-diem-btn ${s.note?'has-note':''}" onclick="openM('${k}',${d})">Carpe diem</div></td>
             </tr>`;
         }
         document.getElementById('bTable').innerHTML = bHTML;
@@ -234,7 +245,6 @@
         }
     }
 
-    // ARCHIVE LOGIC
     function openArchive() {
         const m = document.getElementById('mSelect').value, y = document.getElementById('ySelect').value;
         document.getElementById('pdfUser').innerText = (state.name || "პერსონალური") + " - " + months[m] + ", " + y;
@@ -265,7 +275,7 @@
     }
 
     function upd(k, f, v, auto) { if(!state.shifts[k]) state.shifts[k]={}; state.shifts[k][f]=v; state.shifts[k].isAuto=auto; save(); render(); }
-    function openM(k, d) { activeKey = k; document.getElementById('jTitle').innerText = `${d} რიცხვის დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
+    function openM(k, d) { activeKey = k; const m = document.getElementById('mSelect').value; document.getElementById('jTitle').innerText = `${d} ${months[m]} - დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
     function saveJ() { if(!state.shifts[activeKey]) state.shifts[activeKey]={}; state.shifts[activeKey].note = document.getElementById('jText').value; save(); render(); closeM(); }
     function closeM() { document.getElementById('jModal').style.display='none'; }
     function save() { state.name = document.getElementById('nurseName').value; localStorage.setItem('nurse_v15', JSON.stringify(state)); }
