@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carpe Diem Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
             --glass: rgba(255, 255, 255, 0.95);
             --accent: #3b82f6;
-            --success: #10b981;
             --danger: #ef4444;
             --bg: #f1f5f9;
             --dark-navy: #0f172a;
@@ -18,8 +17,8 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        body { background: var(--bg); min-height: 100vh; padding: 10px; color: #1e293b; overflow-x: hidden; }
-        .container { width: 100%; max-width: 600px; margin: 0 auto; transition: transform 0.3s ease; }
+        body { background: var(--bg); min-height: 100vh; padding: 10px; color: #1e293b; }
+        .container { width: 100%; max-width: 600px; margin: 0 auto; }
 
         .glass-card {
             background: var(--glass);
@@ -45,51 +44,58 @@
         th { background: var(--dark-navy); color: white; padding: 12px 5px; font-size: 0.65rem; text-transform: uppercase; }
         td { padding: 12px 2px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.03); vertical-align: middle; }
         
-        .day-num { font-weight: 800; color: #475569; font-size: 0.95rem; }
+        .day-num { font-weight: 800; color: #475569; }
         .day-num.is-auto { color: var(--danger); }
 
         .plan-select { width: 90%; padding: 6px; font-weight: 800; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
         .real-val { background: #f0f7ff; color: var(--accent); font-weight: 800; border-radius: 8px; padding: 6px 0; width: 90%; display: inline-block; font-size: 0.9rem; }
 
-        /* Carpe Diem Styled Badge */
         .carpe-diem-btn {
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #94a3b8;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 6px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s all;
-            display: inline-block;
-            white-space: nowrap;
+            font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+            color: #94a3b8; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 10px;
+            border-radius: 8px; cursor: pointer; transition: 0.3s all; display: inline-block;
         }
-        .carpe-diem-btn.has-note {
-            background: var(--dark-navy);
-            color: #ffffff;
-            border-color: var(--dark-navy);
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-        }
-        .carpe-diem-btn:active { transform: scale(0.95); }
+        .carpe-diem-btn.has-note { background: var(--dark-navy); color: #ffffff; border-color: var(--dark-navy); }
 
-        /* Archive Page */
+        /* Archive/PDF View */
         #archivePage {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: white; z-index: 2000; overflow-y: auto; padding: 25px;
         }
-        .archive-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .archive-item { margin-bottom: 25px; padding: 20px; border-radius: 18px; background: #f8fafc; border-left: 5px solid var(--dark-navy); }
-        .archive-date { font-weight: 800; color: var(--dark-navy); display: block; margin-bottom: 8px; font-size: 1.1rem; }
-        .archive-note { color: #334155; font-size: 1rem; line-height: 1.6; }
+        .archive-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        
+        /* PDF specific styling */
+        #pdfContent { padding: 20px; background: white; }
+        .pdf-title { font-size: 22px; font-weight: 800; color: var(--dark-navy); margin-bottom: 30px; text-align: center; }
+        
+        .archive-item { 
+            margin-bottom: 0; 
+            padding: 20px 0; 
+            border-bottom: 1px solid #e2e8f0; /* გამყოფი ზოლი თარიღებს შორის */
+        }
+        .archive-item:last-child { border-bottom: none; }
+        
+        .archive-date { 
+            font-weight: 700; 
+            color: #64748b; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .archive-note { 
+            color: #1e293b; 
+            font-size: 1.05rem; 
+            line-height: 1.7; 
+            white-space: pre-wrap; 
+            word-wrap: break-word;
+        }
 
         /* Modal */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 3000; padding: 20px; backdrop-filter: blur(4px); }
         .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         textarea { width: 100%; border-radius: 16px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; resize: none; outline: none; }
-        textarea:focus { border-color: var(--accent); }
 
         .totals { display: flex; justify-content: space-around; padding: 15px; background: #f8fafc; border-top: 1px solid #e2e8f0; }
         .total-box { text-align: center; }
@@ -148,11 +154,10 @@
 <div id="archivePage">
     <div class="archive-header">
         <button class="btn btn-secondary" style="width: auto; margin-bottom:0;" onclick="closeArchive()"> უკან</button>
-        <h3 id="archiveTitle">დღიურის არქივი</h3>
-        <button class="btn btn-primary" style="width: auto; margin-bottom:0;" onclick="downloadPDF()">📄 PDF</button>
+        <button class="btn btn-primary" style="width: auto; margin-bottom:0;" onclick="downloadPDF()">📄 PDF ჩამოტვირთვა</button>
     </div>
-    <div id="pdfContent" style="padding: 10px;">
-        <h2 id="pdfUser" style="margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #0f172a; padding-bottom: 10px;"></h2>
+    <div id="pdfContent">
+        <div class="pdf-title" id="pdfUser"></div>
         <div id="archiveList"></div>
     </div>
 </div>
@@ -160,7 +165,7 @@
 <div id="jModal" class="modal">
     <div class="modal-content">
         <h3 id="jTitle" style="font-weight: 800; color: var(--dark-navy);"></h3>
-        <textarea id="jText" rows="6" placeholder="აღწერეთ დღე (გამოცდილება / გართობა)..."></textarea>
+        <textarea id="jText" rows="6" placeholder="აღწერეთ დღე..."></textarea>
         <div style="display: flex; gap: 10px;">
             <button class="btn btn-secondary" style="flex:1" onclick="closeM()">გაუქმება</button>
             <button class="btn btn-primary" style="flex:1" onclick="saveJ()">შენახვა</button>
@@ -247,14 +252,14 @@
 
     function openArchive() {
         const m = document.getElementById('mSelect').value, y = document.getElementById('ySelect').value;
-        document.getElementById('pdfUser').innerText = (state.name || "პერსონალური") + " - " + months[m] + ", " + y;
+        document.getElementById('pdfUser').innerText = (state.name || "პირადი დღიური") + " \n " + months[m] + ", " + y;
         let listHTML = "";
         for(let d=1; d<=31; d++) {
             const k = `d_${y}_${m}_${d}`;
             if(state.shifts[k]?.note) {
                 listHTML += `<div class="archive-item">
                     <span class="archive-date">${d} ${months[m]}, ${y}</span>
-                    <div class="archive-note">${state.shifts[k].note.replace(/\n/g,'<br>')}</div>
+                    <div class="archive-note">${state.shifts[k].note}</div>
                 </div>`;
             }
         }
@@ -267,15 +272,17 @@
     function downloadPDF() {
         const element = document.getElementById('pdfContent');
         const opt = {
-            margin: 10, filename: `Diary_${months[document.getElementById('mSelect').value]}.pdf`,
+            margin: [15, 15], 
+            filename: `Daily_Log_${months[document.getElementById('mSelect').value]}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas: { scale: 3, letterRendering: true, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         html2pdf().set(opt).from(element).save();
     }
 
     function upd(k, f, v, auto) { if(!state.shifts[k]) state.shifts[k]={}; state.shifts[k][f]=v; state.shifts[k].isAuto=auto; save(); render(); }
-    function openM(k, d) { activeKey = k; const m = document.getElementById('mSelect').value; document.getElementById('jTitle').innerText = `${d} ${months[m]} - დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
+    function openM(k, d) { activeKey = k; const m = document.getElementById('mSelect').value; document.getElementById('jTitle').innerText = `${d} ${months[m]} - ჩანაწერი`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
     function saveJ() { if(!state.shifts[activeKey]) state.shifts[activeKey]={}; state.shifts[activeKey].note = document.getElementById('jText').value; save(); render(); closeM(); }
     function closeM() { document.getElementById('jModal').style.display='none'; }
     function save() { state.name = document.getElementById('nurseName').value; localStorage.setItem('nurse_v15', JSON.stringify(state)); }
