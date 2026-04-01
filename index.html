@@ -4,124 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carpe Diem Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --glass: rgba(255, 255, 255, 0.98);
+            --glass: rgba(255, 255, 255, 0.95);
             --accent: #3b82f6;
-            --bg: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f1f5f9;
             --dark-navy: #0f172a;
-            --border-color: #cbd5e1; /* უფრო მკვეთრი ნაცრისფერი ხაზებისთვის */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        body { background: var(--bg); min-height: 100vh; padding: 10px; color: #1e293b; }
-        .container { width: 100%; max-width: 600px; margin: 0 auto; }
+        body { background: var(--bg); min-height: 100vh; padding: 10px; color: #1e293b; overflow-x: hidden; }
+        .container { width: 100%; max-width: 600px; margin: 0 auto; transition: transform 0.3s ease; }
 
-        /* Main UI Elements */
         .glass-card {
             background: var(--glass);
+            backdrop-filter: blur(10px);
             border-radius: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             padding: 20px;
             margin-bottom: 15px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
         .section-title { font-size: 0.65rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; display: block; }
-        input, select { width: 100%; padding: 12px; border-radius: 14px; border: 1px solid #e2e8f0; outline: none; font-size: 1rem; margin-bottom: 10px; background: white; }
+        
+        input, select { width: 100%; padding: 12px; border-radius: 14px; border: 1px solid #e2e8f0; outline: none; font-size: 1rem; margin-bottom: 10px; }
         .btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: var(--dark-navy); color: white; }
         .btn-secondary { background: white; border: 1px solid #e2e8f0; color: #1e293b; }
-        
-        /* Table Styles */
+        .btn-archive { background: #eff6ff; color: var(--accent); border: 1px solid #dbeafe; }
+
+        /* Table */
         .table-card { padding: 0; overflow: hidden; }
         table { width: 100%; border-collapse: collapse; }
         th { background: var(--dark-navy); color: white; padding: 12px 5px; font-size: 0.65rem; text-transform: uppercase; }
-        td { padding: 12px 2px; text-align: center; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        td { padding: 12px 2px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.03); vertical-align: middle; }
         
-        .carpe-diem-btn {
-            font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
-            color: #94a3b8; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 10px;
-            border-radius: 8px; cursor: pointer; display: inline-block;
-        }
-        .carpe-diem-btn.has-note { background: var(--dark-navy); color: #ffffff; border-color: var(--dark-navy); }
+        .day-num { font-weight: 800; color: #475569; font-size: 0.95rem; }
+        .day-num.is-auto { color: var(--danger); }
 
-        /* --- ARCHIVE & PDF RE-DESIGN --- */
+        .plan-select { width: 90%; padding: 6px; font-weight: 800; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
+        .real-val { background: #f0f7ff; color: var(--accent); font-weight: 800; border-radius: 8px; padding: 6px 0; width: 90%; display: inline-block; font-size: 0.9rem; }
+
+        /* Carpe Diem Styled Badge */
+        .carpe-diem-btn {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s all;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .carpe-diem-btn.has-note {
+            background: var(--dark-navy);
+            color: #ffffff;
+            border-color: var(--dark-navy);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .carpe-diem-btn:active { transform: scale(0.95); }
+
+        /* Archive Page */
         #archivePage {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #fff; z-index: 2000; overflow-y: auto;
+            background: white; z-index: 2000; overflow-y: auto; padding: 25px;
         }
-        .archive-header-nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 20px; background: #fff; border-bottom: 2px solid var(--dark-navy);
-            position: sticky; top: 0; z-index: 10;
-        }
-        
-        #pdfContent { 
-            padding: 40px 60px; 
-            max-width: 850px; 
-            margin: 0 auto;
-            background: white;
-        }
-        
-        .pdf-header { 
-            text-align: center; 
-            margin-bottom: 60px; 
-            padding-bottom: 20px; 
-            border-bottom: 3px double var(--dark-navy); 
-        }
-        .pdf-header h1 { font-size: 26px; font-weight: 800; color: #000; margin-bottom: 5px; text-transform: uppercase; }
-        .pdf-header p { font-size: 14px; color: #475569; letter-spacing: 3px; }
-
-        /* მკვეთრი ზღვარი დღეებს შორის */
-        .archive-item { 
-            margin-bottom: 40px; 
-            padding-bottom: 10px;
-            page-break-inside: avoid;
-        }
-        
-        /* თარიღის ბლოკი მკვეთრი ხაზით */
-        .archive-date-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .archive-date { 
-            font-weight: 900; 
-            color: #000; 
-            font-size: 1rem; 
-            white-space: nowrap;
-            padding-right: 15px;
-        }
-        .date-line {
-            flex-grow: 1;
-            height: 2px;
-            background-color: var(--dark-navy); /* მკვეთრი შავი ხაზი */
-        }
-        
-        .archive-note { 
-            color: #111; 
-            font-size: 1.15rem; 
-            line-height: 1.9; 
-            white-space: pre-wrap;
-            text-align: justify;
-            padding-left: 5px;
-        }
+        .archive-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .archive-item { margin-bottom: 25px; padding: 20px; border-radius: 18px; background: #f8fafc; border-left: 5px solid var(--dark-navy); }
+        .archive-date { font-weight: 800; color: var(--dark-navy); display: block; margin-bottom: 8px; font-size: 1.1rem; }
+        .archive-note { color: #334155; font-size: 1rem; line-height: 1.6; }
 
         /* Modal */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000; padding: 20px; backdrop-filter: blur(5px); }
-        .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 28px; }
-        textarea { width: 100%; border-radius: 16px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1.1rem; resize: none; outline: none; min-height: 250px; line-height: 1.5; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 3000; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        textarea { width: 100%; border-radius: 16px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 1rem; resize: none; outline: none; }
+        textarea:focus { border-color: var(--accent); }
+
+        .totals { display: flex; justify-content: space-around; padding: 15px; background: #f8fafc; border-top: 1px solid #e2e8f0; }
+        .total-box { text-align: center; }
+        .total-box span { font-size: 1.2rem; font-weight: 900; display: block; }
     </style>
 </head>
 <body>
 
 <div class="container" id="mainView">
     <div class="glass-card">
-        <span class="section-title">მართვის პანელი</span>
+        <span class="section-title">მთავარი პანელი</span>
         <input type="text" id="nurseName" placeholder="თქვენი სახელი და გვარი..." oninput="save()">
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -139,7 +118,12 @@
             </select>
         </div>
         <button class="btn btn-primary" onclick="saveReal()">საათის დაფიქსირება</button>
-        <button class="btn btn-secondary" onclick="openArchive()">📂 პირადი დღიურის ნახვა</button>
+        <button class="btn btn-archive" onclick="openArchive()"> დღიურის არქივი</button>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button class="btn btn-secondary" style="font-size: 0.8rem;" onclick="fillFuture()">წლის შევსება</button>
+            <button class="btn btn-secondary" style="color:var(--danger); font-size: 0.8rem;" onclick="clearFromNow()">გეგმის წაშლა</button>
+        </div>
     </div>
 
     <div class="glass-card table-card">
@@ -154,27 +138,29 @@
             </thead>
             <tbody id="bTable"></tbody>
         </table>
+        <div class="totals">
+            <div class="total-box"><small>გეგმა</small><span id="totalPlan">0</span></div>
+            <div class="total-box"><small>ნამუშევარი</small><span id="totalReal" style="color:var(--accent)">0</span></div>
+        </div>
     </div>
 </div>
 
 <div id="archivePage">
-    <div class="archive-header-nav">
-        <button class="btn btn-secondary" style="width: auto; margin-bottom:0; padding: 8px 15px;" onclick="closeArchive()">⬅ უკან</button>
-        <button class="btn btn-primary" style="width: auto; margin-bottom:0; padding: 8px 15px;" onclick="downloadPDF()">📄 PDF ჩამოტვირთვა</button>
+    <div class="archive-header">
+        <button class="btn btn-secondary" style="width: auto; margin-bottom:0;" onclick="closeArchive()"> უკან</button>
+        <h3 id="archiveTitle">დღიურის არქივი</h3>
+        <button class="btn btn-primary" style="width: auto; margin-bottom:0;" onclick="downloadPDF()">📄 PDF</button>
     </div>
-    <div id="pdfContent">
-        <div class="pdf-header">
-            <h1 id="pdfUserName"></h1>
-            <p id="pdfDateRange"></p>
-        </div>
+    <div id="pdfContent" style="padding: 10px;">
+        <h2 id="pdfUser" style="margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #0f172a; padding-bottom: 10px;"></h2>
         <div id="archiveList"></div>
     </div>
 </div>
 
 <div id="jModal" class="modal">
     <div class="modal-content">
-        <h3 id="jTitle" style="font-weight: 800;"></h3>
-        <textarea id="jText" placeholder="ჩაწერეთ თქვენი დღის ისტორია..."></textarea>
+        <h3 id="jTitle" style="font-weight: 800; color: var(--dark-navy);"></h3>
+        <textarea id="jText" rows="6" placeholder="აღწერეთ დღე (გამოცდილება / გართობა)..."></textarea>
         <div style="display: flex; gap: 10px;">
             <button class="btn btn-secondary" style="flex:1" onclick="closeM()">გაუქმება</button>
             <button class="btn btn-primary" style="flex:1" onclick="saveJ()">შენახვა</button>
@@ -198,74 +184,100 @@
     }
 
     function render() {
-        const m = parseInt(document.getElementById('mSelect').value), y = parseInt(document.getElementById('ySelect').value);
+        const m = parseInt(document.getElementById('mSelect').value);
+        const y = parseInt(document.getElementById('ySelect').value);
         const days = new Date(y, m + 1, 0).getDate();
-        let bHTML = "";
+        let bHTML = "", tP = 0, tR = 0;
 
         for(let d=1; d<=days; d++) {
             const k = `d_${y}_${m}_${d}`, s = state.shifts[k] || {};
+            const pVal = s.plan || "", rVal = s.real || "—";
+            tP += parseInt(pVal) || 0; tR += parseInt(rVal) || 0;
+
             bHTML += `<tr>
-                <td class="day-num">${d}</td>
-                <td><select class="plan-select" onchange="upd('${k}','plan',this.value)">
-                    <option value=""></option><option value="8" ${s.plan=='8'?'selected':''}>8</option>
-                    <option value="16" ${s.plan=='16'?'selected':''}>16</option><option value="24" ${s.plan=='24'?'selected':''}>24</option>
+                <td class="day-num ${s.isAuto?'is-auto':''}">${d}</td>
+                <td><select class="plan-select" onchange="upd('${k}','plan',this.value, false)">
+                    <option value=""></option><option value="8" ${pVal=='8'?'selected':''}>8</option>
+                    <option value="16" ${pVal=='16'?'selected':''}>16</option><option value="24" ${pVal=='24'?'selected':''}>24</option>
                 </select></td>
-                <td><div class="real-val">${s.real || '—'}</div></td>
+                <td><div class="real-val">${rVal}</div></td>
                 <td><div class="carpe-diem-btn ${s.note?'has-note':''}" onclick="openM('${k}',${d})">Carpe diem</div></td>
             </tr>`;
         }
         document.getElementById('bTable').innerHTML = bHTML;
+        document.getElementById('totalPlan').innerText = tP;
+        document.getElementById('totalReal').innerText = tR;
     }
 
     function saveReal() {
         const d = document.getElementById('realDay').value, h = document.getElementById('realHours').value;
         const m = document.getElementById('mSelect').value, y = document.getElementById('ySelect').value;
-        if(!d || d<1 || d>31) return alert("მიუთითეთ სწორი რიცხვი");
+        if(!d || d<1 || d>31) return alert("მიუთითეთ რიცხვი");
         const k = `d_${y}_${m}_${d}`;
         if(!state.shifts[k]) state.shifts[k] = {};
         state.shifts[k].real = h; save(); render();
     }
 
+    function fillFuture() {
+        const m = parseInt(document.getElementById('mSelect').value), y = parseInt(document.getElementById('ySelect').value);
+        let startD = null, hrs = 24;
+        for(let d=1; d<=31; d++) if(state.shifts[`d_${y}_${m}_${d}`]?.plan) { startD = new Date(y,m,d); hrs = state.shifts[`d_${y}_${m}_${d}`].plan; break; }
+        if(!startD) return alert("ჯერ მონიშნეთ ერთი დღის გეგმა!");
+        
+        let c = new Date(startD);
+        while(c.getFullYear() == y) {
+            const k = `d_${c.getFullYear()}_${c.getMonth()}_${c.getDate()}`;
+            if(!state.shifts[k]) state.shifts[k] = {};
+            state.shifts[k].plan = hrs; state.shifts[k].isAuto = true;
+            c.setDate(c.getDate() + 4);
+        }
+        save(); render();
+    }
+
+    function clearFromNow() {
+        const m = parseInt(document.getElementById('mSelect').value), y = document.getElementById('ySelect').value;
+        if(confirm("წაიშალოს წლის ბოლომდე?")) {
+            for(let cm=m; cm<=11; cm++) for(let d=1; d<=31; d++) {
+                const k = `d_${y}_${cm}_${d}`;
+                if(state.shifts[k]) { state.shifts[k].plan = ""; state.shifts[k].isAuto = false; }
+            }
+            save(); render();
+        }
+    }
+
     function openArchive() {
         const m = document.getElementById('mSelect').value, y = document.getElementById('ySelect').value;
-        document.getElementById('pdfUserName').innerText = state.name || "პირადი დღიური";
-        document.getElementById('pdfDateRange').innerText = months[m] + " " + y;
-        
+        document.getElementById('pdfUser').innerText = (state.name || "პერსონალური") + " - " + months[m] + ", " + y;
         let listHTML = "";
         for(let d=1; d<=31; d++) {
             const k = `d_${y}_${m}_${d}`;
             if(state.shifts[k]?.note) {
-                listHTML += `
-                <div class="archive-item">
-                    <div class="archive-date-wrapper">
-                        <span class="archive-date">${d} ${months[m]}</span>
-                        <div class="date-line"></div>
-                    </div>
-                    <div class="archive-note">${state.shifts[k].note}</div>
+                listHTML += `<div class="archive-item">
+                    <span class="archive-date">${d} ${months[m]}, ${y}</span>
+                    <div class="archive-note">${state.shifts[k].note.replace(/\n/g,'<br>')}</div>
                 </div>`;
             }
         }
-        document.getElementById('archiveList').innerHTML = listHTML || "<p style='text-align:center; padding:50px; color:#94a3b8;'>ამ თვეში ჩანაწერები არ არის.</p>";
+        document.getElementById('archiveList').innerHTML = listHTML || "<p style='text-align:center; color:#94a3b8; margin-top:20px;'>ამ თვეში ჩანაწერები არ არის.</p>";
         document.getElementById('archivePage').style.display = 'block';
     }
+
+    function closeArchive() { document.getElementById('archivePage').style.display = 'none'; }
 
     function downloadPDF() {
         const element = document.getElementById('pdfContent');
         const opt = {
-            margin: 0,
-            filename: `Daybook_${months[document.getElementById('mSelect').value]}.pdf`,
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            margin: 10, filename: `Diary_${months[document.getElementById('mSelect').value]}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         html2pdf().set(opt).from(element).save();
     }
 
-    function closeArchive() { document.getElementById('archivePage').style.display = 'none'; }
-    function openM(k, d) { activeKey = k; const m = document.getElementById('mSelect').value; document.getElementById('jTitle').innerText = `${d} ${months[m]}`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
+    function upd(k, f, v, auto) { if(!state.shifts[k]) state.shifts[k]={}; state.shifts[k][f]=v; state.shifts[k].isAuto=auto; save(); render(); }
+    function openM(k, d) { activeKey = k; const m = document.getElementById('mSelect').value; document.getElementById('jTitle').innerText = `${d} ${months[m]} - დღიური`; document.getElementById('jText').value = state.shifts[k]?.note || ""; document.getElementById('jModal').style.display='block'; }
     function saveJ() { if(!state.shifts[activeKey]) state.shifts[activeKey]={}; state.shifts[activeKey].note = document.getElementById('jText').value; save(); render(); closeM(); }
     function closeM() { document.getElementById('jModal').style.display='none'; }
-    function upd(k, f, v) { if(!state.shifts[k]) state.shifts[k]={}; state.shifts[k][f]=v; save(); render(); }
     function save() { state.name = document.getElementById('nurseName').value; localStorage.setItem('nurse_v15', JSON.stringify(state)); }
 
     init();
